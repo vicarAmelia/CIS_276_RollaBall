@@ -29,12 +29,19 @@ private void Update()
 
     if(Input.GetKeyDown(KeyCode.Space))
     {
+        rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
         rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse); 
     }
 }
 
 private void MovePlayer()
 {
-    rb.velocity = new Vector3(moveInput.x * speed, rb.velocity.y, moveInput.z * speed);
+    transform.forward = playerCam.transform.forward;
+
+    Vector3 directionX = transform.right.normalized * moveInput.x;
+    Vector3 directionZ = transform.forward.normalized * moveInput.z;
+
+    rb.velocity = new Vector3(0, rb.velocity.y, 0) + (directionX + directionZ) * speed; 
+
 }
 }
